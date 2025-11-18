@@ -1,29 +1,29 @@
 <?php
 
-namespace Drupal\headless_integration\Controller;
+namespace Drupal\drupal_headless\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Url;
-use Drupal\headless_integration\Service\ConfigurationManager;
-use Drupal\headless_integration\Service\ConsumerManager;
+use Drupal\drupal_headless\Service\ConfigurationManager;
+use Drupal\drupal_headless\Service\ConsumerManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides dashboard for headless integration.
+ * Provides dashboard for Drupal Headless Module.
  */
 class DashboardController extends ControllerBase {
 
   /**
    * The configuration manager service.
    *
-   * @var \Drupal\headless_integration\Service\ConfigurationManager
+   * @var \Drupal\drupal_headless\Service\ConfigurationManager
    */
   protected $configManager;
 
   /**
    * The consumer manager service.
    *
-   * @var \Drupal\headless_integration\Service\ConsumerManager
+   * @var \Drupal\drupal_headless\Service\ConsumerManager
    */
   protected $consumerManager;
 
@@ -32,13 +32,13 @@ class DashboardController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     $instance = new static();
-    $instance->configManager = $container->get('headless_integration.configuration_manager');
-    $instance->consumerManager = $container->get('headless_integration.consumer_manager');
+    $instance->configManager = $container->get('drupal_headless.configuration_manager');
+    $instance->consumerManager = $container->get('drupal_headless.consumer_manager');
     return $instance;
   }
 
   /**
-   * Displays the headless integration dashboard.
+   * Displays the Drupal Headless Module dashboard.
    *
    * @return array
    *   A render array.
@@ -128,7 +128,7 @@ class DashboardController extends ControllerBase {
       '#items' => [
         [
           '#markup' => $this->t('<a href="@url">Configure Settings</a>', [
-            '@url' => Url::fromRoute('headless_integration.settings')->toString(),
+            '@url' => Url::fromRoute('drupal_headless.settings')->toString(),
           ]),
         ],
         [

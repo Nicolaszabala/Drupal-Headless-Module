@@ -1,8 +1,0 @@
-administer headless integration:
-  title: 'Administer Headless Integration'
-  description: 'Configure headless integration settings and manage API consumers.'
-  restrict access: true
-
-access headless dashboard:
-  title: 'Access Headless Dashboard'
-  description: 'View the headless integration dashboard and API documentation.'

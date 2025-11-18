@@ -1,0 +1,8 @@
+administer drupal headless:
+  title: 'Administer Drupal Headless Module'
+  description: 'Configure Drupal Headless Module settings and manage API consumers.'
+  restrict access: true
+
+access drupal headless dashboard:
+  title: 'Access Drupal Headless Dashboard'
+  description: 'View the Drupal Headless dashboard and API documentation.'

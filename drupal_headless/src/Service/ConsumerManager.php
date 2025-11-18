@@ -1,13 +1,13 @@
 <?php
 
-namespace Drupal\headless_integration\Service;
+namespace Drupal\drupal_headless\Service;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 
 /**
- * Manages API consumers for headless integration.
+ * Manages API consumers for Drupal Headless Module.
  */
 class ConsumerManager {
 
@@ -21,7 +21,7 @@ class ConsumerManager {
   /**
    * The configuration manager.
    *
-   * @var \Drupal\headless_integration\Service\ConfigurationManager
+   * @var \Drupal\drupal_headless\Service\ConfigurationManager
    */
   protected $configManager;
 
@@ -37,7 +37,7 @@ class ConsumerManager {
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
-   * @param \Drupal\headless_integration\Service\ConfigurationManager $config_manager
+   * @param \Drupal\drupal_headless\Service\ConfigurationManager $config_manager
    *   The configuration manager.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
    *   The logger factory.
@@ -45,7 +45,7 @@ class ConsumerManager {
   public function __construct(EntityTypeManagerInterface $entity_type_manager, ConfigurationManager $config_manager, LoggerChannelFactoryInterface $logger_factory) {
     $this->entityTypeManager = $entity_type_manager;
     $this->configManager = $config_manager;
-    $this->logger = $logger_factory->get('headless_integration');
+    $this->logger = $logger_factory->get('drupal_headless');
   }
 
   /**
@@ -97,7 +97,7 @@ class ConsumerManager {
   }
 
   /**
-   * Gets all headless integration consumers.
+   * Gets all Drupal Headless Module consumers.
    *
    * @return array
    *   Array of consumer entities.

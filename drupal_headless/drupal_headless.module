@@ -10,9 +10,9 @@ use Drupal\Core\Routing\RouteMatchInterface;
 /**
  * Implements hook_help().
  */
-function headless_integration_help($route_name, RouteMatchInterface $route_match) {
+function drupal_headless_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
-    case 'help.page.headless_integration':
+    case 'help.page.drupal_headless':
       $output = '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('The Drupal Headless Module simplifies the setup of headless Drupal installations for modern frontend frameworks like Next.js, React, and Astro.') . '</p>';
       $output .= '<h3>' . t('Features') . '</h3>';
@@ -23,8 +23,8 @@ function headless_integration_help($route_name, RouteMatchInterface $route_match
       $output .= '<li>' . t('Developer dashboard with API documentation') . '</li>';
       $output .= '</ul>';
       $output .= '<h3>' . t('Configuration') . '</h3>';
-      $output .= '<p>' . t('Visit the <a href="@settings">settings page</a> to configure your headless integration.', [
-        '@settings' => \Drupal\Core\Url::fromRoute('headless_integration.settings')->toString(),
+      $output .= '<p>' . t('Visit the <a href="@settings">settings page</a> to configure the module.', [
+        '@settings' => \Drupal\Core\Url::fromRoute('drupal_headless.settings')->toString(),
       ]) . '</p>';
       return $output;
   }

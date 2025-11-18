@@ -8,4 +8,4 @@ dependencies:
   - consumers:consumers
   - simple_oauth:simple_oauth
 
-configure: headless_integration.settings
+configure: drupal_headless.settings

@@ -28,27 +28,27 @@ Setting up headless Drupal can be complex and time-consuming. This module stream
 ### Via Composer (recommended)
 
 ```bash
-composer require drupal/headless_integration
+composer require drupal/drupal_headless
 ```
 
 ### Manual Installation
 
-1. Download the module and place it in `/modules/contrib/headless_integration`
+1. Download the module and place it in `/modules/contrib/drupal_headless`
 2. Install dependencies:
    ```bash
    composer require drupal/consumers drupal/simple_oauth
    ```
 3. Enable the module:
    ```bash
-   drush en headless_integration
+   drush en drupal_headless
    ```
 
 ## Configuration
 
 ### Initial Setup
 
-1. Navigate to **Configuration > Web Services > Headless Integration Settings**
-   (`/admin/config/services/headless-integration`)
+1. Navigate to **Configuration > Web Services > Drupal Headless Module Settings**
+   (`/admin/config/services/drupal-headless`)
 
 2. Configure CORS settings:
    - Enable CORS if your frontend runs on a different domain
@@ -66,7 +66,7 @@ API consumers represent your frontend applications.
 
 #### Via Dashboard
 
-1. Go to **Administration > Headless Dashboard** (`/admin/headless-integration/dashboard`)
+1. Go to **Administration > Headless Dashboard** (`/admin/drupal-headless/dashboard`)
 2. Click "Manage Consumers"
 3. Add a new consumer with:
    - Label: Your app name (e.g., "Next.js Frontend")
@@ -76,7 +76,7 @@ API consumers represent your frontend applications.
 #### Programmatically
 
 ```php
-$consumer_manager = \Drupal::service('headless_integration.consumer_manager');
+$consumer_manager = \Drupal::service('drupal_headless.consumer_manager');
 $consumer = $consumer_manager->createConsumer(
   'My Next.js App',
   'Production frontend application',
@@ -169,7 +169,7 @@ View available resources: `https://your-site.com/jsonapi/index`
 
 ## Permissions
 
-- **Administer Headless Integration**: Full access to configuration
+- **Administer Drupal Headless Module**: Full access to configuration
 - **Access Headless Dashboard**: View dashboard and API documentation
 
 ## Troubleshooting
@@ -206,23 +206,23 @@ drush status-report
 
 ```bash
 # Unit tests
-vendor/bin/phpunit modules/contrib/headless_integration/tests/src/Unit
+vendor/bin/phpunit modules/contrib/drupal_headless/tests/src/Unit
 
 # Kernel tests
-vendor/bin/phpunit modules/contrib/headless_integration/tests/src/Kernel
+vendor/bin/phpunit modules/contrib/drupal_headless/tests/src/Kernel
 
 # Functional tests
-vendor/bin/phpunit modules/contrib/headless_integration/tests/src/Functional
+vendor/bin/phpunit modules/contrib/drupal_headless/tests/src/Functional
 ```
 
 ### Code Quality
 
 ```bash
 # Check coding standards
-vendor/bin/phpcs --standard=Drupal,DrupalPractice modules/contrib/headless_integration
+vendor/bin/phpcs --standard=Drupal,DrupalPractice modules/contrib/drupal_headless
 
 # Static analysis
-vendor/bin/phpstan analyse modules/contrib/headless_integration
+vendor/bin/phpstan analyse modules/contrib/drupal_headless
 ```
 
 ## Roadmap
@@ -244,5 +244,5 @@ GPL-2.0-or-later
 
 ## Support
 
-- [Issue Queue](https://www.drupal.org/project/issues/headless_integration)
-- [Documentation](https://www.drupal.org/docs/contributed-modules/headless-integration)
+- [Issue Queue](https://www.drupal.org/project/issues/drupal_headless)
+- [Documentation](https://www.drupal.org/docs/contributed-modules/drupal-headless)

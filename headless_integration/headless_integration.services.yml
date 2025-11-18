@@ -1,8 +1,0 @@
-services:
-  headless_integration.configuration_manager:
-    class: Drupal\headless_integration\Service\ConfigurationManager
-    arguments: ['@config.factory', '@module_handler', '@logger.factory']
-
-  headless_integration.consumer_manager:
-    class: Drupal\headless_integration\Service\ConsumerManager
-    arguments: ['@entity_type.manager', '@headless_integration.configuration_manager', '@logger.factory']

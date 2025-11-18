@@ -1,15 +1,15 @@
 <?php
 
-namespace Drupal\Tests\headless_integration\Kernel;
+namespace Drupal\Tests\drupal_headless\Kernel;
 
 use Drupal\KernelTests\KernelTestBase;
-use Drupal\headless_integration\Service\ConsumerManager;
+use Drupal\drupal_headless\Service\ConsumerManager;
 
 /**
  * Tests for ConsumerManager service.
  *
- * @group headless_integration
- * @coversDefaultClass \Drupal\headless_integration\Service\ConsumerManager
+ * @group drupal_headless
+ * @coversDefaultClass \Drupal\drupal_headless\Service\ConsumerManager
  */
 class ConsumerManagerTest extends KernelTestBase {
 
@@ -22,13 +22,13 @@ class ConsumerManagerTest extends KernelTestBase {
     'consumers',
     'serialization',
     'image',
-    'headless_integration',
+    'drupal_headless',
   ];
 
   /**
    * The consumer manager under test.
    *
-   * @var \Drupal\headless_integration\Service\ConsumerManager
+   * @var \Drupal\drupal_headless\Service\ConsumerManager
    */
   protected $consumerManager;
 
@@ -40,9 +40,9 @@ class ConsumerManagerTest extends KernelTestBase {
 
     $this->installEntitySchema('user');
     $this->installEntitySchema('consumer');
-    $this->installConfig(['headless_integration']);
+    $this->installConfig(['drupal_headless']);
 
-    $this->consumerManager = $this->container->get('headless_integration.consumer_manager');
+    $this->consumerManager = $this->container->get('drupal_headless.consumer_manager');
   }
 
   /**

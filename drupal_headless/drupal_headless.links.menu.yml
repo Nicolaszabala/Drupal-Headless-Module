@@ -1,0 +1,13 @@
+drupal_headless.admin_settings:
+  title: 'Drupal Headless Module'
+  description: 'Configure headless Drupal integration for frontend frameworks.'
+  route_name: drupal_headless.settings
+  parent: system.admin_config_services
+  weight: 10
+
+drupal_headless.dashboard:
+  title: 'Drupal Headless Dashboard'
+  description: 'View Drupal Headless Module status and API documentation.'
+  route_name: drupal_headless.dashboard
+  parent: system.admin
+  weight: 5

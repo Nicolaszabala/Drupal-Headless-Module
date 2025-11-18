@@ -1,21 +1,21 @@
 <?php
 
-namespace Drupal\headless_integration\Form;
+namespace Drupal\drupal_headless\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\headless_integration\Service\ConfigurationManager;
+use Drupal\drupal_headless\Service\ConfigurationManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Configure Headless Integration settings.
+ * Configure Drupal Headless Module settings.
  */
-class HeadlessIntegrationSettingsForm extends ConfigFormBase {
+class SettingsForm extends ConfigFormBase {
 
   /**
    * The configuration manager service.
    *
-   * @var \Drupal\headless_integration\Service\ConfigurationManager
+   * @var \Drupal\drupal_headless\Service\ConfigurationManager
    */
   protected $configManager;
 
@@ -24,7 +24,7 @@ class HeadlessIntegrationSettingsForm extends ConfigFormBase {
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
-    $instance->configManager = $container->get('headless_integration.configuration_manager');
+    $instance->configManager = $container->get('drupal_headless.configuration_manager');
     return $instance;
   }
 
@@ -32,21 +32,21 @@ class HeadlessIntegrationSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['headless_integration.settings'];
+    return ['drupal_headless.settings'];
   }
 
   /**
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'headless_integration_settings';
+    return 'drupal_headless_settings_form';
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $config = $this->config('headless_integration.settings');
+    $config = $this->config('drupal_headless.settings');
 
     // Check dependencies first.
     $missing = $this->configManager->checkDependencies();
@@ -185,7 +185,7 @@ class HeadlessIntegrationSettingsForm extends ConfigFormBase {
       $origins = array_filter(array_map('trim', explode("\n", $origins_text)));
     }
 
-    $this->config('headless_integration.settings')
+    $this->config('drupal_headless.settings')
       ->set('enable_cors', $form_state->getValue('enable_cors'))
       ->set('cors_allowed_origins', array_values($origins))
       ->set('enable_rate_limiting', $form_state->getValue('enable_rate_limiting'))

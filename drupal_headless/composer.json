@@ -1,6 +1,6 @@
 {
-  "name": "drupal/headless_integration",
-  "description": "Simplifies headless Drupal setup for modern frontend frameworks",
+  "name": "drupal/drupal_headless",
+  "description": "Drupal Headless Module - Simplifies headless Drupal setup for modern frontend frameworks",
   "type": "drupal-module",
   "license": "GPL-2.0-or-later",
   "minimum-stability": "dev",

@@ -1,0 +1,15 @@
+drupal_headless.settings:
+  path: '/admin/config/services/drupal-headless'
+  defaults:
+    _form: '\Drupal\drupal_headless\Form\SettingsForm'
+    _title: 'Drupal Headless Module Settings'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.dashboard:
+  path: '/admin/drupal-headless/dashboard'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\DashboardController::overview'
+    _title: 'Drupal Headless Dashboard'
+  requirements:
+    _permission: 'access drupal headless dashboard'

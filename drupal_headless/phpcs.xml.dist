@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ruleset name="headless_integration">
+<ruleset name="drupal_headless">
   <description>PHP CodeSniffer configuration for Drupal Headless Module</description>
 
   <file>.</file>

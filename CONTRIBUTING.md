@@ -37,16 +37,16 @@ Before submitting a PR, ensure all tests pass:
 
 ```bash
 # Unit tests
-vendor/bin/phpunit headless_integration/tests/src/Unit
+vendor/bin/phpunit drupal_headless/tests/src/Unit
 
 # Kernel tests
-vendor/bin/phpunit headless_integration/tests/src/Kernel
+vendor/bin/phpunit drupal_headless/tests/src/Kernel
 
 # Functional tests
-vendor/bin/phpunit headless_integration/tests/src/Functional
+vendor/bin/phpunit drupal_headless/tests/src/Functional
 
 # All tests
-vendor/bin/phpunit headless_integration/tests
+vendor/bin/phpunit drupal_headless/tests
 ```
 
 ### Code Quality
@@ -55,13 +55,13 @@ We follow Drupal coding standards. Run these checks before committing:
 
 ```bash
 # Check coding standards
-vendor/bin/phpcs --standard=Drupal,DrupalPractice headless_integration
+vendor/bin/phpcs --standard=Drupal,DrupalPractice drupal_headless
 
 # Fix automatic issues
-vendor/bin/phpcbf --standard=Drupal,DrupalPractice headless_integration
+vendor/bin/phpcbf --standard=Drupal,DrupalPractice drupal_headless
 
 # Static analysis
-vendor/bin/phpstan analyse headless_integration
+vendor/bin/phpstan analyse drupal_headless
 ```
 
 ## Coding Standards
@@ -121,8 +121,8 @@ Add consumer creation wizard
 /**
  * Tests for MyService.
  *
- * @group headless_integration
- * @coversDefaultClass \Drupal\headless_integration\Service\MyService
+ * @group drupal_headless
+ * @coversDefaultClass \Drupal\drupal_headless\Service\MyService
  */
 class MyServiceTest extends UnitTestCase {
 

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Install, update and uninstall functions for the headless_integration module.
+ * Install, update and uninstall functions for the Drupal Headless Module.
  */
 
 use Drupal\Core\File\FileSystemInterface;
@@ -10,7 +10,7 @@ use Drupal\Core\File\FileSystemInterface;
 /**
  * Implements hook_install().
  */
-function headless_integration_install() {
+function drupal_headless_install() {
   // Create private directory for OAuth2 keys if it doesn't exist.
   $private_path = \Drupal::service('file_system')->realpath('private://');
 
@@ -18,7 +18,7 @@ function headless_integration_install() {
     $keys_path = $private_path . '/oauth_keys';
 
     if (!\Drupal::service('file_system')->prepareDirectory($keys_path, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS)) {
-      \Drupal::logger('headless_integration')->warning('Could not create OAuth2 keys directory at @path', [
+      \Drupal::logger('drupal_headless')->warning('Could not create OAuth2 keys directory at @path', [
         '@path' => $keys_path,
       ]);
     }
@@ -27,15 +27,15 @@ function headless_integration_install() {
     \Drupal::messenger()->addWarning(t('Private file system is not configured. OAuth2 keys cannot be generated automatically. Please configure a private file path in settings.php'));
   }
 
-  \Drupal::messenger()->addStatus(t('Headless Integration module installed successfully. Visit the <a href="@settings">settings page</a> to configure.', [
-    '@settings' => \Drupal\Core\Url::fromRoute('headless_integration.settings')->toString(),
+  \Drupal::messenger()->addStatus(t('Drupal Headless Module installed successfully. Visit the <a href="@settings">settings page</a> to configure.', [
+    '@settings' => \Drupal\Core\Url::fromRoute('drupal_headless.settings')->toString(),
   ]));
 }
 
 /**
  * Implements hook_requirements().
  */
-function headless_integration_requirements($phase) {
+function drupal_headless_requirements($phase) {
   $requirements = [];
 
   if ($phase === 'runtime') {
@@ -43,16 +43,16 @@ function headless_integration_requirements($phase) {
     $private_path = \Drupal::service('file_system')->realpath('private://');
 
     if (!$private_path) {
-      $requirements['headless_integration_private_path'] = [
-        'title' => t('Headless Integration - Private file system'),
+      $requirements['drupal_headless_private_path'] = [
+        'title' => t('Drupal Headless Module - Private file system'),
         'value' => t('Not configured'),
         'description' => t('OAuth2 authentication requires a private file system to store encryption keys securely. Configure the private file path in settings.php'),
         'severity' => REQUIREMENT_ERROR,
       ];
     }
     else {
-      $requirements['headless_integration_private_path'] = [
-        'title' => t('Headless Integration - Private file system'),
+      $requirements['drupal_headless_private_path'] = [
+        'title' => t('Drupal Headless Module - Private file system'),
         'value' => t('Configured'),
         'severity' => REQUIREMENT_OK,
       ];
@@ -73,8 +73,8 @@ function headless_integration_requirements($phase) {
     }
 
     if (!empty($missing_modules)) {
-      $requirements['headless_integration_dependencies'] = [
-        'title' => t('Headless Integration - Dependencies'),
+      $requirements['drupal_headless_dependencies'] = [
+        'title' => t('Drupal Headless Module - Dependencies'),
         'value' => t('Missing modules'),
         'description' => t('The following required modules are not enabled: @modules', [
           '@modules' => implode(', ', $missing_modules),
@@ -90,9 +90,9 @@ function headless_integration_requirements($phase) {
 /**
  * Implements hook_uninstall().
  */
-function headless_integration_uninstall() {
+function drupal_headless_uninstall() {
   // Remove configuration.
-  \Drupal::configFactory()->getEditable('headless_integration.settings')->delete();
+  \Drupal::configFactory()->getEditable('drupal_headless.settings')->delete();
 
-  \Drupal::messenger()->addStatus(t('Headless Integration configuration has been removed.'));
+  \Drupal::messenger()->addStatus(t('Drupal Headless Module configuration has been removed.'));
 }

@@ -1,27 +1,27 @@
 <?php
 
-namespace Drupal\Tests\headless_integration\Unit;
+namespace Drupal\Tests\drupal_headless\Unit;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\ImmutableConfig;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
-use Drupal\headless_integration\Service\ConfigurationManager;
+use Drupal\drupal_headless\Service\ConfigurationManager;
 use Drupal\Tests\UnitTestCase;
 
 /**
  * Tests for ConfigurationManager service.
  *
- * @group headless_integration
- * @coversDefaultClass \Drupal\headless_integration\Service\ConfigurationManager
+ * @group drupal_headless
+ * @coversDefaultClass \Drupal\drupal_headless\Service\ConfigurationManager
  */
 class ConfigurationManagerTest extends UnitTestCase {
 
   /**
    * The configuration manager under test.
    *
-   * @var \Drupal\headless_integration\Service\ConfigurationManager
+   * @var \Drupal\drupal_headless\Service\ConfigurationManager
    */
   protected $configManager;
 
@@ -78,7 +78,7 @@ class ConfigurationManagerTest extends UnitTestCase {
       ->willReturn(TRUE);
 
     $this->configFactory->method('get')
-      ->with('headless_integration.settings')
+      ->with('drupal_headless.settings')
       ->willReturn($config);
 
     $this->assertTrue($this->configManager->isCorsEnabled());
@@ -96,7 +96,7 @@ class ConfigurationManagerTest extends UnitTestCase {
       ->willReturn(FALSE);
 
     $this->configFactory->method('get')
-      ->with('headless_integration.settings')
+      ->with('drupal_headless.settings')
       ->willReturn($config);
 
     $this->assertFalse($this->configManager->isCorsEnabled());
@@ -116,7 +116,7 @@ class ConfigurationManagerTest extends UnitTestCase {
       ->willReturn($expected_origins);
 
     $this->configFactory->method('get')
-      ->with('headless_integration.settings')
+      ->with('drupal_headless.settings')
       ->willReturn($config);
 
     $this->assertEquals($expected_origins, $this->configManager->getAllowedOrigins());
@@ -134,7 +134,7 @@ class ConfigurationManagerTest extends UnitTestCase {
       ->willReturn(NULL);
 
     $this->configFactory->method('get')
-      ->with('headless_integration.settings')
+      ->with('drupal_headless.settings')
       ->willReturn($config);
 
     $this->assertEquals([], $this->configManager->getAllowedOrigins());
@@ -183,7 +183,7 @@ class ConfigurationManagerTest extends UnitTestCase {
       ]);
 
     $this->configFactory->method('get')
-      ->with('headless_integration.settings')
+      ->with('drupal_headless.settings')
       ->willReturn($config);
 
     $rate_config = $this->configManager->getRateLimitConfig();

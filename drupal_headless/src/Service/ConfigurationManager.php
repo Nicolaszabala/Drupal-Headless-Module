@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\headless_integration\Service;
+namespace Drupal\drupal_headless\Service;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
@@ -8,7 +8,7 @@ use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelInterface;
 
 /**
- * Manages headless integration configuration.
+ * Manages Drupal Headless Module configuration.
  */
 class ConfigurationManager {
 
@@ -46,17 +46,17 @@ class ConfigurationManager {
   public function __construct(ConfigFactoryInterface $config_factory, ModuleHandlerInterface $module_handler, LoggerChannelFactoryInterface $logger_factory) {
     $this->configFactory = $config_factory;
     $this->moduleHandler = $module_handler;
-    $this->logger = $logger_factory->get('headless_integration');
+    $this->logger = $logger_factory->get('drupal_headless');
   }
 
   /**
-   * Gets the headless integration settings.
+   * Gets the Drupal Headless Module settings.
    *
    * @return \Drupal\Core\Config\ImmutableConfig
    *   The configuration object.
    */
   public function getSettings() {
-    return $this->configFactory->get('headless_integration.settings');
+    return $this->configFactory->get('drupal_headless.settings');
   }
 
   /**
@@ -129,7 +129,7 @@ class ConfigurationManager {
       return FALSE;
     }
 
-    $config = $this->configFactory->getEditable('headless_integration.settings');
+    $config = $this->configFactory->getEditable('drupal_headless.settings');
     $frameworks = $config->get('frontend_frameworks') ?? [];
     $frameworks[] = $framework;
     $config->set('frontend_frameworks', $frameworks)->save();
@@ -151,7 +151,7 @@ class ConfigurationManager {
    *   TRUE if successful, FALSE otherwise.
    */
   public function removeFramework($consumer_uuid) {
-    $config = $this->configFactory->getEditable('headless_integration.settings');
+    $config = $this->configFactory->getEditable('drupal_headless.settings');
     $frameworks = $config->get('frontend_frameworks') ?? [];
 
     $updated_frameworks = array_filter($frameworks, function ($framework) use ($consumer_uuid) {

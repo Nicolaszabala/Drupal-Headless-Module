@@ -1,13 +1,13 @@
 <?php
 
-namespace Drupal\Tests\headless_integration\Functional;
+namespace Drupal\Tests\drupal_headless\Functional;
 
 use Drupal\Tests\BrowserTestBase;
 
 /**
  * Tests the headless integration settings form.
  *
- * @group headless_integration
+ * @group drupal_headless
  */
 class SettingsFormTest extends BrowserTestBase {
 
@@ -20,7 +20,7 @@ class SettingsFormTest extends BrowserTestBase {
    * {@inheritdoc}
    */
   protected static $modules = [
-    'headless_integration',
+    'drupal_headless',
     'consumers',
     'simple_oauth',
     'jsonapi',
@@ -81,7 +81,7 @@ class SettingsFormTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('The configuration options have been saved.');
 
     // Verify the values were saved.
-    $config = $this->config('headless_integration.settings');
+    $config = $this->config('drupal_headless.settings');
     $this->assertTrue($config->get('enable_cors'));
     $this->assertEquals(['https://example.com', 'https://test.com'], $config->get('cors_allowed_origins'));
     $this->assertTrue($config->get('enable_rate_limiting'));

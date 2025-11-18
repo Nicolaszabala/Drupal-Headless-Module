@@ -1,6 +1,6 @@
-headless_integration.settings:
+drupal_headless.settings:
   type: config_object
-  label: 'Headless Integration settings'
+  label: 'Drupal Headless Module settings'
   mapping:
     enable_cors:
       type: boolean
