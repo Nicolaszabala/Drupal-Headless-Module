@@ -29,3 +29,11 @@ drupal_headless.create_consumer:
     _title: 'Create API Consumer'
   requirements:
     _permission: 'administer drupal headless'
+
+drupal_headless.setup_wizard:
+  path: '/admin/drupal-headless/setup'
+  defaults:
+    _form: '\Drupal\drupal_headless\Form\SetupWizardForm'
+    _title: 'Setup Wizard'
+  requirements:
+    _permission: 'administer drupal headless'

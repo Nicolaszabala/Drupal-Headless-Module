@@ -1,0 +1,5 @@
+setup_wizard:
+  version: 1.0
+  css:
+    theme:
+      css/setup-wizard.css: {}

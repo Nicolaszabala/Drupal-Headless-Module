@@ -55,6 +55,23 @@ class DashboardController extends ControllerBase {
   public function overview() {
     $build = [];
 
+    // Show setup wizard prompt if not fully configured.
+    $keys_exist = $this->keyManager->keysExist();
+    $consumers = $this->consumerManager->getConsumers();
+
+    if (!$keys_exist || empty($consumers)) {
+      $build['setup_wizard'] = [
+        '#type' => 'markup',
+        '#markup' => '<div class="messages messages--info" style="margin-bottom: 20px;">' .
+          '<h3>' . $this->t('Quick Setup') . '</h3>' .
+          '<p>' . $this->t('Get started in minutes with our step-by-step setup wizard.') . '</p>' .
+          '<p><a href="' . Url::fromRoute('drupal_headless.setup_wizard')->toString() . '" class="button button--primary button--large">' .
+          $this->t('Run Setup Wizard') .
+          '</a></p>' .
+          '</div>',
+      ];
+    }
+
     // Status section.
     $build['status'] = [
       '#type' => 'details',
