@@ -6,6 +6,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Url;
 use Drupal\drupal_headless\Service\ConfigurationManager;
 use Drupal\drupal_headless\Service\ConsumerManager;
+use Drupal\drupal_headless\Service\OAuth2KeyManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -28,12 +29,20 @@ class DashboardController extends ControllerBase {
   protected $consumerManager;
 
   /**
+   * The OAuth2 key manager service.
+   *
+   * @var \Drupal\drupal_headless\Service\OAuth2KeyManager
+   */
+  protected $keyManager;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     $instance = new static();
     $instance->configManager = $container->get('drupal_headless.configuration_manager');
     $instance->consumerManager = $container->get('drupal_headless.consumer_manager');
+    $instance->keyManager = $container->get('drupal_headless.oauth2_key_manager');
     return $instance;
   }
 
@@ -80,6 +89,32 @@ class DashboardController extends ControllerBase {
         ? $this->t('Enabled')
         : $this->t('Disabled'),
     ];
+
+    // OAuth2 Keys status.
+    $keys_validation = $this->keyManager->validateKeys();
+    $keys_exist = $this->keyManager->keysExist();
+
+    $build['status']['oauth_keys'] = [
+      '#type' => 'item',
+      '#title' => $this->t('OAuth2 Keys'),
+      '#markup' => $keys_validation['status']
+        ? $this->t('<span style="color: green;">✓ Configured</span>')
+        : $this->t('<span style="color: red;">✗ Not configured</span>'),
+    ];
+
+    if (!$keys_exist) {
+      $build['status']['oauth_keys_action'] = [
+        '#type' => 'markup',
+        '#markup' => '<p><a href="' . Url::fromRoute('drupal_headless.generate_keys')->toString() . '" class="button button--primary">' . $this->t('Generate OAuth2 Keys Now') . '</a></p>',
+      ];
+    }
+    else {
+      $paths = $this->keyManager->getKeyPaths();
+      $build['status']['oauth_keys_info'] = [
+        '#type' => 'markup',
+        '#markup' => '<p>' . $this->t('Keys location: @dir', ['@dir' => $paths['dir']]) . '</p>',
+      ];
+    }
 
     // Consumers section.
     $build['consumers'] = [

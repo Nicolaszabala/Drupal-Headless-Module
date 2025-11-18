@@ -13,3 +13,11 @@ drupal_headless.dashboard:
     _title: 'Drupal Headless Dashboard'
   requirements:
     _permission: 'access drupal headless dashboard'
+
+drupal_headless.generate_keys:
+  path: '/admin/drupal-headless/generate-keys'
+  defaults:
+    _form: '\Drupal\drupal_headless\Form\GenerateKeysForm'
+    _title: 'Generate OAuth2 Keys'
+  requirements:
+    _permission: 'administer drupal headless'
