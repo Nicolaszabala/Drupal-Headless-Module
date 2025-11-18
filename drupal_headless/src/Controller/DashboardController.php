@@ -123,11 +123,16 @@ class DashboardController extends ControllerBase {
       '#open' => TRUE,
     ];
 
+    $build['consumers']['create_button'] = [
+      '#type' => 'markup',
+      '#markup' => '<p><a href="' . Url::fromRoute('drupal_headless.create_consumer')->toString() . '" class="button button--primary">' . $this->t('Create New Consumer') . '</a></p>',
+    ];
+
     $consumers = $this->consumerManager->getConsumers();
 
     if (empty($consumers)) {
       $build['consumers']['empty'] = [
-        '#markup' => $this->t('No consumers configured yet.'),
+        '#markup' => $this->t('<p>No consumers configured yet. Create your first consumer to get started.</p>'),
       ];
     }
     else {

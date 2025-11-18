@@ -21,3 +21,11 @@ drupal_headless.generate_keys:
     _title: 'Generate OAuth2 Keys'
   requirements:
     _permission: 'administer drupal headless'
+
+drupal_headless.create_consumer:
+  path: '/admin/drupal-headless/create-consumer'
+  defaults:
+    _form: '\Drupal\drupal_headless\Form\CreateConsumerForm'
+    _title: 'Create API Consumer'
+  requirements:
+    _permission: 'administer drupal headless'
