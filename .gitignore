@@ -1,0 +1,17 @@
+# Dependencies
+/vendor/
+/node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.sublime-*
+.DS_Store
+
+# Testing
+/phpunit.xml
+/.phpunit.result.cache
+
+# Build artifacts
+*.tar.gz
+*.zip

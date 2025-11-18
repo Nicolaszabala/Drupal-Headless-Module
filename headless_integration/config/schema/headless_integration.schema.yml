@@ -1,0 +1,47 @@
+headless_integration.settings:
+  type: config_object
+  label: 'Headless Integration settings'
+  mapping:
+    enable_cors:
+      type: boolean
+      label: 'Enable CORS'
+    cors_allowed_origins:
+      type: sequence
+      label: 'Allowed CORS origins'
+      sequence:
+        type: string
+        label: 'Origin URL'
+    enable_rate_limiting:
+      type: boolean
+      label: 'Enable rate limiting'
+    rate_limit_requests:
+      type: integer
+      label: 'Rate limit requests'
+    rate_limit_window:
+      type: integer
+      label: 'Rate limit window (seconds)'
+    auto_configure_oauth:
+      type: boolean
+      label: 'Auto-configure OAuth2'
+    default_token_expiration:
+      type: integer
+      label: 'Default token expiration (seconds)'
+    frontend_frameworks:
+      type: sequence
+      label: 'Configured frontend frameworks'
+      sequence:
+        type: mapping
+        label: 'Framework configuration'
+        mapping:
+          name:
+            type: string
+            label: 'Framework name'
+          type:
+            type: string
+            label: 'Framework type'
+          preview_url:
+            type: string
+            label: 'Preview URL'
+          consumer_uuid:
+            type: string
+            label: 'Associated consumer UUID'

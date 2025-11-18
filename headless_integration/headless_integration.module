@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Provides headless Drupal integration for modern frontend frameworks.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function headless_integration_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.headless_integration':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('The Drupal Headless Module simplifies the setup of headless Drupal installations for modern frontend frameworks like Next.js, React, and Astro.') . '</p>';
+      $output .= '<h3>' . t('Features') . '</h3>';
+      $output .= '<ul>';
+      $output .= '<li>' . t('Auto-configuration of JSON:API and OAuth2 authentication') . '</li>';
+      $output .= '<li>' . t('Simplified consumer management for frontend applications') . '</li>';
+      $output .= '<li>' . t('Security best practices out of the box') . '</li>';
+      $output .= '<li>' . t('Developer dashboard with API documentation') . '</li>';
+      $output .= '</ul>';
+      $output .= '<h3>' . t('Configuration') . '</h3>';
+      $output .= '<p>' . t('Visit the <a href="@settings">settings page</a> to configure your headless integration.', [
+        '@settings' => \Drupal\Core\Url::fromRoute('headless_integration.settings')->toString(),
+      ]) . '</p>';
+      return $output;
+  }
+}

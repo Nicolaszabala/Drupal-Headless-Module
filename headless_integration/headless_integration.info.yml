@@ -1,0 +1,11 @@
+name: Drupal Headless Module
+type: module
+description: 'Simplifies headless Drupal setup for modern frontend frameworks like Next.js, React, and Astro.'
+package: Web Services
+core_version_requirement: ^10.3 || ^11
+dependencies:
+  - drupal:jsonapi
+  - consumers:consumers
+  - simple_oauth:simple_oauth
+
+configure: headless_integration.settings

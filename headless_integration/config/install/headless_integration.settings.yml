@@ -1,0 +1,8 @@
+enable_cors: true
+cors_allowed_origins: []
+enable_rate_limiting: false
+rate_limit_requests: 100
+rate_limit_window: 3600
+auto_configure_oauth: true
+default_token_expiration: 3600
+frontend_frameworks: []
