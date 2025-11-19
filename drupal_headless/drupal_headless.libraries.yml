@@ -1,0 +1,13 @@
+setup_wizard:
+  version: 1.0
+  css:
+    theme:
+      css/setup-wizard.css: {}
+
+api_tester:
+  version: 1.0
+  css:
+    theme:
+      css/api-tester.css: {}
+  js:
+    js/api-tester.js: {}

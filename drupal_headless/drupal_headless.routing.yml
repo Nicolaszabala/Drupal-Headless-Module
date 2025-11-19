@@ -13,3 +13,111 @@ drupal_headless.dashboard:
     _title: 'Drupal Headless Dashboard'
   requirements:
     _permission: 'access drupal headless dashboard'
+
+drupal_headless.generate_keys:
+  path: '/admin/drupal-headless/generate-keys'
+  defaults:
+    _form: '\Drupal\drupal_headless\Form\GenerateKeysForm'
+    _title: 'Generate OAuth2 Keys'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.create_consumer:
+  path: '/admin/drupal-headless/create-consumer'
+  defaults:
+    _form: '\Drupal\drupal_headless\Form\CreateConsumerForm'
+    _title: 'Create API Consumer'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.setup_wizard:
+  path: '/admin/drupal-headless/setup'
+  defaults:
+    _form: '\Drupal\drupal_headless\Form\SetupWizardForm'
+    _title: 'Setup Wizard'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.api_test:
+  path: '/admin/drupal-headless/api-test'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\ApiTestController::testPage'
+    _title: 'API Tester'
+  requirements:
+    _permission: 'access drupal headless dashboard'
+
+drupal_headless.api_test_endpoint:
+  path: '/admin/drupal-headless/api-test/endpoint'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\ApiTestController::testEndpoint'
+  requirements:
+    _permission: 'access drupal headless dashboard'
+
+drupal_headless.webhooks:
+  path: '/admin/drupal-headless/webhooks'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\WebhookController::listWebhooks'
+    _title: 'Webhooks'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.webhook_add:
+  path: '/admin/drupal-headless/webhooks/add'
+  defaults:
+    _form: '\Drupal\drupal_headless\Form\WebhookForm'
+    _title: 'Add Webhook'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.webhook_edit:
+  path: '/admin/drupal-headless/webhooks/{webhook_id}/edit'
+  defaults:
+    _form: '\Drupal\drupal_headless\Form\WebhookForm'
+    _title: 'Edit Webhook'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.webhook_test:
+  path: '/admin/drupal-headless/webhooks/{webhook_id}/test'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\WebhookController::testWebhook'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.webhook_delete:
+  path: '/admin/drupal-headless/webhooks/{webhook_id}/delete'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\WebhookController::deleteWebhook'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.webhook_logs:
+  path: '/admin/drupal-headless/webhooks/logs'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\WebhookController::logs'
+    _title: 'Webhook Logs'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.preview:
+  path: '/drupal-headless/preview/{entity_type_id}/{entity_id}'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\PreviewController::preview'
+    _title: 'Preview'
+  requirements:
+    _custom_access: '\Drupal\drupal_headless\Controller\PreviewController::previewAccess'
+
+drupal_headless.preview_validate:
+  path: '/drupal-headless/preview/validate'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\PreviewController::validateToken'
+  requirements:
+    _access: 'TRUE'
+
+drupal_headless.preview_config:
+  path: '/admin/drupal-headless/preview'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\PreviewController::configuration'
+    _title: 'Preview Configuration'
+  requirements:
+    _permission: 'administer drupal headless'

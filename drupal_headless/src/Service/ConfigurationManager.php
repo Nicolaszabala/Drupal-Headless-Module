@@ -60,6 +60,16 @@ class ConfigurationManager {
   }
 
   /**
+   * Gets the editable configuration object.
+   *
+   * @return \Drupal\Core\Config\Config
+   *   The editable configuration object.
+   */
+  public function getConfig() {
+    return $this->configFactory->getEditable('drupal_headless.settings');
+  }
+
+  /**
    * Checks if CORS is enabled.
    *
    * @return bool

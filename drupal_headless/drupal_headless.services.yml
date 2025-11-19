@@ -6,3 +6,15 @@ services:
   drupal_headless.consumer_manager:
     class: Drupal\drupal_headless\Service\ConsumerManager
     arguments: ['@entity_type.manager', '@drupal_headless.configuration_manager', '@logger.factory']
+
+  drupal_headless.oauth2_key_manager:
+    class: Drupal\drupal_headless\Service\OAuth2KeyManager
+    arguments: ['@file_system', '@logger.factory', '@messenger']
+
+  drupal_headless.webhook_manager:
+    class: Drupal\drupal_headless\Service\WebhookManager
+    arguments: ['@http_client', '@entity_type.manager', '@logger.factory', '@queue', '@state']
+
+  drupal_headless.preview_manager:
+    class: Drupal\drupal_headless\Service\PreviewManager
+    arguments: ['@state', '@uuid', '@logger.factory', '@drupal_headless.configuration_manager']
