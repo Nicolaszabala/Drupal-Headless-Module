@@ -98,3 +98,26 @@ drupal_headless.webhook_logs:
     _title: 'Webhook Logs'
   requirements:
     _permission: 'administer drupal headless'
+
+drupal_headless.preview:
+  path: '/drupal-headless/preview/{entity_type_id}/{entity_id}'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\PreviewController::preview'
+    _title: 'Preview'
+  requirements:
+    _custom_access: '\Drupal\drupal_headless\Controller\PreviewController::previewAccess'
+
+drupal_headless.preview_validate:
+  path: '/drupal-headless/preview/validate'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\PreviewController::validateToken'
+  requirements:
+    _access: 'TRUE'
+
+drupal_headless.preview_config:
+  path: '/admin/drupal-headless/preview'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\PreviewController::configuration'
+    _title: 'Preview Configuration'
+  requirements:
+    _permission: 'administer drupal headless'

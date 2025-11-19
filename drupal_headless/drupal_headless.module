@@ -76,3 +76,76 @@ function drupal_headless_trigger_webhook(EntityInterface $entity, $event) {
     ]);
   }
 }
+
+/**
+ * Implements hook_form_alter().
+ */
+function drupal_headless_form_alter(&$form, $form_state, $form_id) {
+  // Add preview button to node edit forms.
+  if (preg_match('/^node_(\w+)_form$/', $form_id, $matches) ||
+      preg_match('/^node_(\w+)_edit_form$/', $form_id, $matches)) {
+    drupal_headless_add_preview_button($form, $form_state);
+  }
+}
+
+/**
+ * Adds preview button to entity forms.
+ *
+ * @param array $form
+ *   The form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The form state.
+ */
+function drupal_headless_add_preview_button(array &$form, $form_state) {
+  $entity = $form_state->getFormObject()->getEntity();
+
+  // Only add preview button for existing entities.
+  if ($entity->isNew()) {
+    return;
+  }
+
+  $preview_manager = \Drupal::service('drupal_headless.preview_manager');
+  $config = $preview_manager->getPreviewConfigurations();
+
+  // Only add button if preview URL is configured.
+  if (empty($config['default_url']) && empty($config['framework_urls'])) {
+    return;
+  }
+
+  // Add preview button to actions.
+  $form['actions']['preview'] = [
+    '#type' => 'link',
+    '#title' => t('Preview'),
+    '#url' => \Drupal\Core\Url::fromRoute('drupal_headless.preview', [
+      'entity_type_id' => $entity->getEntityTypeId(),
+      'entity_id' => $entity->id(),
+    ]),
+    '#attributes' => [
+      'class' => ['button', 'button--preview'],
+      'target' => '_blank',
+      'title' => t('Preview this content in your frontend application'),
+    ],
+    '#weight' => 10,
+  ];
+
+  // If multiple frameworks configured, add dropdown.
+  if (!empty($config['framework_urls']) && count($config['framework_urls']) > 1) {
+    $form['actions']['preview']['#type'] = 'container';
+    $form['actions']['preview']['#attributes']['class'][] = 'preview-dropdown';
+
+    foreach ($config['framework_urls'] as $framework => $url) {
+      $form['actions']['preview'][$framework] = [
+        '#type' => 'link',
+        '#title' => t('Preview (@framework)', ['@framework' => ucfirst($framework)]),
+        '#url' => \Drupal\Core\Url::fromRoute('drupal_headless.preview', [
+          'entity_type_id' => $entity->getEntityTypeId(),
+          'entity_id' => $entity->id(),
+        ], ['query' => ['framework' => $framework]]),
+        '#attributes' => [
+          'class' => ['button', 'button--small'],
+          'target' => '_blank',
+        ],
+      ];
+    }
+  }
+}

@@ -120,6 +120,39 @@ class SettingsForm extends ConfigFormBase {
       ],
     ];
 
+    $form['preview'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Preview Settings'),
+      '#open' => FALSE,
+      '#description' => $this->t('Configure preview functionality to allow content editors to preview their content in the frontend before publishing.'),
+    ];
+
+    $form['preview']['default_preview_url'] = [
+      '#type' => 'url',
+      '#title' => $this->t('Default Preview URL'),
+      '#description' => $this->t('The base URL of your frontend application for previews. Example: http://localhost:3000'),
+      '#default_value' => $config->get('default_preview_url'),
+      '#placeholder' => 'http://localhost:3000',
+    ];
+
+    $form['preview']['framework_previews'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Framework-specific Preview URLs'),
+      '#description' => $this->t('Configure different preview URLs for different frameworks/environments.'),
+    ];
+
+    $preview_urls = $config->get('preview_urls') ?? [];
+
+    $frameworks = ['nextjs', 'react', 'vue', 'astro'];
+    foreach ($frameworks as $framework) {
+      $form['preview']['framework_previews']["preview_url_{$framework}"] = [
+        '#type' => 'url',
+        '#title' => $this->t('@framework Preview URL', ['@framework' => ucfirst($framework)]),
+        '#default_value' => $preview_urls[$framework] ?? '',
+        '#placeholder' => 'https://preview-' . $framework . '.example.com',
+      ];
+    }
+
     $form['oauth'] = [
       '#type' => 'details',
       '#title' => $this->t('OAuth2 Settings'),
@@ -185,12 +218,24 @@ class SettingsForm extends ConfigFormBase {
       $origins = array_filter(array_map('trim', explode("\n", $origins_text)));
     }
 
+    // Process preview URLs.
+    $preview_urls = [];
+    $frameworks = ['nextjs', 'react', 'vue', 'astro'];
+    foreach ($frameworks as $framework) {
+      $url = $form_state->getValue("preview_url_{$framework}");
+      if (!empty($url)) {
+        $preview_urls[$framework] = $url;
+      }
+    }
+
     $this->config('drupal_headless.settings')
       ->set('enable_cors', $form_state->getValue('enable_cors'))
       ->set('cors_allowed_origins', array_values($origins))
       ->set('enable_rate_limiting', $form_state->getValue('enable_rate_limiting'))
       ->set('rate_limit_requests', $form_state->getValue('rate_limit_requests'))
       ->set('rate_limit_window', $form_state->getValue('rate_limit_window'))
+      ->set('default_preview_url', $form_state->getValue('default_preview_url'))
+      ->set('preview_urls', $preview_urls)
       ->set('auto_configure_oauth', $form_state->getValue('auto_configure_oauth'))
       ->set('default_token_expiration', $form_state->getValue('default_token_expiration'))
       ->save();

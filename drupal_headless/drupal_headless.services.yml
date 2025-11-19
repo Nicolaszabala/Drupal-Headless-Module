@@ -14,3 +14,7 @@ services:
   drupal_headless.webhook_manager:
     class: Drupal\drupal_headless\Service\WebhookManager
     arguments: ['@http_client', '@entity_type.manager', '@logger.factory', '@queue', '@state']
+
+  drupal_headless.preview_manager:
+    class: Drupal\drupal_headless\Service\PreviewManager
+    arguments: ['@state', '@uuid', '@logger.factory', '@drupal_headless.configuration_manager']
