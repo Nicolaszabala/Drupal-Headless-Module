@@ -124,4 +124,143 @@ class OAuth2KeyManagerTest extends UnitTestCase {
     $this->assertNotEmpty($result['messages']);
   }
 
+  /**
+   * Tests validateKeys returns success when keys are properly configured.
+   *
+   * @covers ::validateKeys
+   */
+  public function testValidateKeysSuccess() {
+    $private_path = sys_get_temp_dir() . '/drupal_test_' . uniqid();
+    mkdir($private_path . '/oauth_keys', 0755, TRUE);
+
+    // Create dummy key files.
+    file_put_contents($private_path . '/oauth_keys/private.key', 'test-private-key');
+    file_put_contents($private_path . '/oauth_keys/public.key', 'test-public-key');
+
+    $this->fileSystem->method('realpath')
+      ->with('private://')
+      ->willReturn($private_path);
+
+    $result = $this->keyManager->validateKeys();
+
+    $this->assertTrue($result['status']);
+    $this->assertNotEmpty($result['messages']);
+
+    // Cleanup.
+    unlink($private_path . '/oauth_keys/private.key');
+    unlink($private_path . '/oauth_keys/public.key');
+    rmdir($private_path . '/oauth_keys');
+    rmdir($private_path);
+  }
+
+  /**
+   * Tests keysExist returns TRUE when both keys exist.
+   *
+   * @covers ::keysExist
+   */
+  public function testKeysExistReturnsTrueWhenBothKeysExist() {
+    $private_path = sys_get_temp_dir() . '/drupal_test_' . uniqid();
+    mkdir($private_path . '/oauth_keys', 0755, TRUE);
+
+    // Create dummy key files.
+    file_put_contents($private_path . '/oauth_keys/private.key', 'test-private-key');
+    file_put_contents($private_path . '/oauth_keys/public.key', 'test-public-key');
+
+    $this->fileSystem->method('realpath')
+      ->with('private://')
+      ->willReturn($private_path);
+
+    $this->assertTrue($this->keyManager->keysExist());
+
+    // Cleanup.
+    unlink($private_path . '/oauth_keys/private.key');
+    unlink($private_path . '/oauth_keys/public.key');
+    rmdir($private_path . '/oauth_keys');
+    rmdir($private_path);
+  }
+
+  /**
+   * Tests keysExist returns FALSE when only private key exists.
+   *
+   * @covers ::keysExist
+   */
+  public function testKeysExistReturnsFalseWithOnlyPrivateKey() {
+    $private_path = sys_get_temp_dir() . '/drupal_test_' . uniqid();
+    mkdir($private_path . '/oauth_keys', 0755, TRUE);
+
+    // Create only private key.
+    file_put_contents($private_path . '/oauth_keys/private.key', 'test-private-key');
+
+    $this->fileSystem->method('realpath')
+      ->with('private://')
+      ->willReturn($private_path);
+
+    $this->assertFalse($this->keyManager->keysExist());
+
+    // Cleanup.
+    unlink($private_path . '/oauth_keys/private.key');
+    rmdir($private_path . '/oauth_keys');
+    rmdir($private_path);
+  }
+
+  /**
+   * Tests generateKeys fails when private path not configured.
+   *
+   * @covers ::generateKeys
+   */
+  public function testGenerateKeysFailsWithoutPrivatePath() {
+    $this->fileSystem->method('realpath')
+      ->with('private://')
+      ->willReturn(FALSE);
+
+    $this->messenger->expects($this->once())
+      ->method('addError');
+
+    $this->assertFalse($this->keyManager->generateKeys());
+  }
+
+  /**
+   * Tests regenerateKeys returns FALSE when private path not configured.
+   *
+   * @covers ::regenerateKeys
+   */
+  public function testRegenerateKeysFailsWithoutPrivatePath() {
+    $this->fileSystem->method('realpath')
+      ->with('private://')
+      ->willReturn(FALSE);
+
+    $this->assertFalse($this->keyManager->regenerateKeys());
+  }
+
+  /**
+   * Tests validateKeys detects unreadable private key.
+   *
+   * @covers ::validateKeys
+   */
+  public function testValidateKeysDetectsUnreadablePrivateKey() {
+    $private_path = sys_get_temp_dir() . '/drupal_test_' . uniqid();
+    mkdir($private_path . '/oauth_keys', 0755, TRUE);
+
+    // Create keys with restrictive permissions.
+    file_put_contents($private_path . '/oauth_keys/private.key', 'test-private-key');
+    file_put_contents($private_path . '/oauth_keys/public.key', 'test-public-key');
+    chmod($private_path . '/oauth_keys/private.key', 0000);
+
+    $this->fileSystem->method('realpath')
+      ->with('private://')
+      ->willReturn($private_path);
+
+    $result = $this->keyManager->validateKeys();
+
+    $this->assertFalse($result['status']);
+    $this->assertNotEmpty($result['messages']);
+
+    // Cleanup (restore permissions first).
+    chmod($private_path . '/oauth_keys/private.key', 0644);
+    unlink($private_path . '/oauth_keys/private.key');
+    unlink($private_path . '/oauth_keys/public.key');
+    rmdir($private_path . '/oauth_keys');
+    rmdir($private_path);
+  }
+
 }
