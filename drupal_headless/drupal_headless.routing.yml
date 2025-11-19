@@ -121,3 +121,18 @@ drupal_headless.preview_config:
     _title: 'Preview Configuration'
   requirements:
     _permission: 'administer drupal headless'
+
+drupal_headless.checklist:
+  path: '/admin/drupal-headless/checklist'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\ChecklistController::checklist'
+    _title: 'Setup Checklist'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.checklist_action:
+  path: '/admin/drupal-headless/checklist/action/{action}'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\ChecklistController::executeAction'
+  requirements:
+    _permission: 'administer drupal headless'

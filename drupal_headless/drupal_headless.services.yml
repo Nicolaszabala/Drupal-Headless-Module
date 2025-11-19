@@ -18,3 +18,7 @@ services:
   drupal_headless.preview_manager:
     class: Drupal\drupal_headless\Service\PreviewManager
     arguments: ['@state', '@uuid', '@logger.factory', '@drupal_headless.configuration_manager']
+
+  drupal_headless.health_check_manager:
+    class: Drupal\drupal_headless\Service\HealthCheckManager
+    arguments: ['@module_handler', '@module_installer', '@file_system', '@drupal_headless.configuration_manager', '@drupal_headless.consumer_manager', '@drupal_headless.oauth2_key_manager', '@logger.factory']

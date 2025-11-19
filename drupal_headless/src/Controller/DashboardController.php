@@ -59,15 +59,33 @@ class DashboardController extends ControllerBase {
     $keys_exist = $this->keyManager->keysExist();
     $consumers = $this->consumerManager->getConsumers();
 
-    if (!$keys_exist || empty($consumers)) {
-      $build['setup_wizard'] = [
+    // Get completion percentage from health check manager.
+    $health_check_manager = \Drupal::service('drupal_headless.health_check_manager');
+    $completion = $health_check_manager->getCompletionPercentage();
+
+    if ($completion < 100) {
+      $build['setup_prompt'] = [
         '#type' => 'markup',
         '#markup' => '<div class="messages messages--info" style="margin-bottom: 20px;">' .
-          '<h3>' . $this->t('Quick Setup') . '</h3>' .
-          '<p>' . $this->t('Get started in minutes with our step-by-step setup wizard.') . '</p>' .
-          '<p><a href="' . Url::fromRoute('drupal_headless.setup_wizard')->toString() . '" class="button button--primary button--large">' .
+          '<h3>' . $this->t('Setup Progress: @percent%', ['@percent' => $completion]) . '</h3>' .
+          '<p>' . $this->t('Complete your headless Drupal configuration. Review the checklist to see what needs to be done.') . '</p>' .
+          '<p>' .
+          '<a href="' . Url::fromRoute('drupal_headless.checklist')->toString() . '" class="button button--primary button--large">' .
+          $this->t('View Setup Checklist') .
+          '</a> ' .
+          '<a href="' . Url::fromRoute('drupal_headless.setup_wizard')->toString() . '" class="button button--large">' .
           $this->t('Run Setup Wizard') .
-          '</a></p>' .
+          '</a>' .
+          '</p>' .
+          '</div>',
+      ];
+    }
+    else {
+      $build['setup_complete'] = [
+        '#type' => 'markup',
+        '#markup' => '<div class="messages messages--status" style="margin-bottom: 20px;">' .
+          '<h3>🎉 ' . $this->t('Setup Complete!') . '</h3>' .
+          '<p>' . $this->t('Your headless Drupal installation is fully configured and ready to use.') . '</p>' .
           '</div>',
       ];
     }
@@ -183,6 +201,11 @@ class DashboardController extends ControllerBase {
     $build['links']['list'] = [
       '#theme' => 'item_list',
       '#items' => [
+        [
+          '#markup' => $this->t('<a href="@url">Setup Checklist</a>', [
+            '@url' => Url::fromRoute('drupal_headless.checklist')->toString(),
+          ]),
+        ],
         [
           '#markup' => $this->t('<a href="@url">Configure Settings</a>', [
             '@url' => Url::fromRoute('drupal_headless.settings')->toString(),
