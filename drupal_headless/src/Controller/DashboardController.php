@@ -194,6 +194,11 @@ class DashboardController extends ControllerBase {
           ]),
         ],
         [
+          '#markup' => $this->t('<a href="@url">API Tester</a>', [
+            '@url' => Url::fromRoute('drupal_headless.api_test')->toString(),
+          ]),
+        ],
+        [
           '#markup' => $this->t('<a href="@url">JSON:API Resources</a>', [
             '@url' => Url::fromRoute('jsonapi.resource_list')->toString(),
           ]),

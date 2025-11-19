@@ -37,3 +37,18 @@ drupal_headless.setup_wizard:
     _title: 'Setup Wizard'
   requirements:
     _permission: 'administer drupal headless'
+
+drupal_headless.api_test:
+  path: '/admin/drupal-headless/api-test'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\ApiTestController::testPage'
+    _title: 'API Tester'
+  requirements:
+    _permission: 'access drupal headless dashboard'
+
+drupal_headless.api_test_endpoint:
+  path: '/admin/drupal-headless/api-test/endpoint'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\ApiTestController::testEndpoint'
+  requirements:
+    _permission: 'access drupal headless dashboard'
