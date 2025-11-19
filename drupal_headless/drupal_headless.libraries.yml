@@ -11,3 +11,9 @@ api_tester:
       css/api-tester.css: {}
   js:
     js/api-tester.js: {}
+
+checklist:
+  version: 1.0
+  css:
+    theme:
+      css/checklist.css: {}
