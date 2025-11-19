@@ -5,6 +5,7 @@
  * Provides headless Drupal integration for modern frontend frameworks.
  */
 
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
@@ -27,5 +28,51 @@ function drupal_headless_help($route_name, RouteMatchInterface $route_match) {
         '@settings' => \Drupal\Core\Url::fromRoute('drupal_headless.settings')->toString(),
       ]) . '</p>';
       return $output;
+  }
+}
+
+/**
+ * Implements hook_entity_insert().
+ */
+function drupal_headless_entity_insert(EntityInterface $entity) {
+  drupal_headless_trigger_webhook($entity, 'create');
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function drupal_headless_entity_update(EntityInterface $entity) {
+  drupal_headless_trigger_webhook($entity, 'update');
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function drupal_headless_entity_delete(EntityInterface $entity) {
+  drupal_headless_trigger_webhook($entity, 'delete');
+}
+
+/**
+ * Triggers webhooks for entity changes.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   The entity.
+ * @param string $event
+ *   The event type (create, update, delete).
+ */
+function drupal_headless_trigger_webhook(EntityInterface $entity, $event) {
+  // Only trigger webhooks for content entities.
+  if (!$entity->getEntityType()->isRevisionable()) {
+    return;
+  }
+
+  try {
+    $webhook_manager = \Drupal::service('drupal_headless.webhook_manager');
+    $webhook_manager->trigger($entity, $event);
+  }
+  catch (\Exception $e) {
+    \Drupal::logger('drupal_headless')->error('Failed to trigger webhook: @error', [
+      '@error' => $e->getMessage(),
+    ]);
   }
 }

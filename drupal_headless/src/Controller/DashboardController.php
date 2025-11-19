@@ -199,6 +199,11 @@ class DashboardController extends ControllerBase {
           ]),
         ],
         [
+          '#markup' => $this->t('<a href="@url">Webhooks</a>', [
+            '@url' => Url::fromRoute('drupal_headless.webhooks')->toString(),
+          ]),
+        ],
+        [
           '#markup' => $this->t('<a href="@url">JSON:API Resources</a>', [
             '@url' => Url::fromRoute('jsonapi.resource_list')->toString(),
           ]),

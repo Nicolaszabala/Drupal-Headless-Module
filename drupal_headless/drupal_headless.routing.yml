@@ -52,3 +52,49 @@ drupal_headless.api_test_endpoint:
     _controller: '\Drupal\drupal_headless\Controller\ApiTestController::testEndpoint'
   requirements:
     _permission: 'access drupal headless dashboard'
+
+drupal_headless.webhooks:
+  path: '/admin/drupal-headless/webhooks'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\WebhookController::listWebhooks'
+    _title: 'Webhooks'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.webhook_add:
+  path: '/admin/drupal-headless/webhooks/add'
+  defaults:
+    _form: '\Drupal\drupal_headless\Form\WebhookForm'
+    _title: 'Add Webhook'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.webhook_edit:
+  path: '/admin/drupal-headless/webhooks/{webhook_id}/edit'
+  defaults:
+    _form: '\Drupal\drupal_headless\Form\WebhookForm'
+    _title: 'Edit Webhook'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.webhook_test:
+  path: '/admin/drupal-headless/webhooks/{webhook_id}/test'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\WebhookController::testWebhook'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.webhook_delete:
+  path: '/admin/drupal-headless/webhooks/{webhook_id}/delete'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\WebhookController::deleteWebhook'
+  requirements:
+    _permission: 'administer drupal headless'
+
+drupal_headless.webhook_logs:
+  path: '/admin/drupal-headless/webhooks/logs'
+  defaults:
+    _controller: '\Drupal\drupal_headless\Controller\WebhookController::logs'
+    _title: 'Webhook Logs'
+  requirements:
+    _permission: 'administer drupal headless'
